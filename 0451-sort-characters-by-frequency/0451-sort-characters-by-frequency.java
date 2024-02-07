@@ -17,15 +17,16 @@ class Solution {
         for(Map.Entry<Character,Integer> e: map.entrySet()){
             pq.add(e);
         }
-        String str="";
+        StringBuilder str=new StringBuilder("");
+        
         while(!pq.isEmpty()){
             Map.Entry<Character,Integer> temp=pq.poll();
             int ct=temp.getValue();
             while(ct!=0){
-                str+=temp.getKey();
+                str.append(temp.getKey());
                 ct--;
             }
         }
-        return str;
+        return str.toString();
     }
 }
