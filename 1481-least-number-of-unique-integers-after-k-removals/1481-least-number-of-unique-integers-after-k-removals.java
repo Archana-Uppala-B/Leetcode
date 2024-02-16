@@ -6,27 +6,20 @@ class Solution {
             map.put(i,map.getOrDefault(i,0)+1);
         }
         
-        PriorityQueue<Map.Entry<Integer,Integer>> pq=new PriorityQueue<>(
-        (a,b)->{
-            return a.getValue()-b.getValue();
-        }
-        );
+        List<Map.Entry<Integer,Integer>> list=new ArrayList<>(map.entrySet());
         
-        for(Map.Entry<Integer,Integer> e: map.entrySet()){
-            pq.add(e);
-        }
+        list.sort((a,b)->{return a.getValue()-b.getValue();});
         
-        while(k>0 && !pq.isEmpty()){
-            Map.Entry<Integer,Integer> e = pq.poll();
-            if(k>=e.getValue())
-             k=k-e.getValue();
-            else if(k<e.getValue()){
-                e.setValue(e.getValue()-k);
-                pq.add(e);
-                k=0;
+        for(Map.Entry<Integer,Integer> e : list){
+            
+            if(e.getValue()<=k){
+                k=k-e.getValue();
+                map.remove(e.getKey());
+            }
+            else{
+                break;
             }
         }
-        
-        return pq.size();
+        return map.size();
     }
 }
