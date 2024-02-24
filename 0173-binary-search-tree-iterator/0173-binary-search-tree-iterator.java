@@ -13,33 +13,30 @@
  *     }
  * }
  */
-
-class ino{
-    public  void in(TreeNode root , ArrayList<Integer> inorder)
-    {
-        if(root==null) return;
-        in(root.left,inorder);
-        inorder.add(root.val);
-        in(root.right,inorder);
-    }
-}
 class BSTIterator {
-    ArrayList<Integer> inorder=new ArrayList<>();
-    int i=0;
+    Stack<TreeNode> st=new Stack<TreeNode>();
     
-    public  BSTIterator(TreeNode root) {
-       ino obj=new ino();
-       obj.in(root,inorder);
+    public BSTIterator(TreeNode root) {
+        pushAll(root);
     }
     
     public int next() {
-        return inorder.get(i++);
+        TreeNode temp=st.pop();
+        pushAll(temp.right);
+        return temp.val;
     }
     
-    public  boolean hasNext() {
-        if(i<inorder.size())
-            return true;
-        return false;
+    public boolean hasNext() {
+        return !st.isEmpty();
+    }
+    
+    public void pushAll(TreeNode root)
+    {
+        while(root!=null)
+        {
+            st.push(root);
+            root=root.left;
+        }
     }
 }
 
