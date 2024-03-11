@@ -1,52 +1,40 @@
 class Solution {
     public String customSortString(String order, String s) {
-        int n = s.length();
-        StringBuilder st=new StringBuilder();
         
-        char arr[]=s.toCharArray();
-        char o[]=order.toCharArray();
+       StringBuilder st=new StringBuilder();
         
-        boolean atoz[]=new boolean[26];
+       HashMap<Character, Integer> map=new HashMap<>();
+       for(int i=0;i<s.length();i++)
+       {
+           char c=s.charAt(i);
+           map.put(c,map.getOrDefault(c,0)+1);
+       }
         
-        for(int i=0;i<26;i++)
-        {
-            atoz[i]=false;
-        }
+       for(int i=0;i<order.length();i++)
+       {
+           char c=order.charAt(i);
+           if(map.containsKey(c))
+           {
+               for(int j=0;j<map.get(c);j++)
+               {
+                   st.append(c);
+               }
+               map.remove(c);
+           }
+       }
         
-        boolean visited[]=new boolean[arr.length];
-        
-        for(int i=0;i<n;i++)
-        {
-            visited[i]=false;
-        }
-        
-        HashMap<Character,Integer> map=new HashMap<>();
-        for(char c: arr)
-        {
-            map.put(c,map.getOrDefault(c,0)+1);
-        }
-        
-        for(char c: o)
-        {
-            if(s.indexOf(c)!=-1)
-            {
-                while(map.getOrDefault(c,0)!=0)
-                {
-                 st.append(c);
-                 map.put(c,map.getOrDefault(c,0)-1);
-                }
-                visited[s.indexOf(c)]=true;
-                atoz[c-'a']=true;
-            }
-        }
-        
-        for(int i=0;i<arr.length;i++)
-        {
-            if(visited[i]==false && atoz[arr[i]-'a']==false)
-            {
-                st.append(arr[i]);
-            }
-        }
-        return st.toString();
+       for(int i=0;i<s.length();i++)
+       {
+           char c=s.charAt(i);
+           if(map.containsKey(c))
+           {
+           for(int j=0;j<map.get(c);j++)
+           {
+               st.append(c);
+           }
+           map.remove(c);
+           }
+       }
+       return st.toString();
     }
 }
