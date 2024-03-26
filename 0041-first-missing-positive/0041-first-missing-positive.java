@@ -1,20 +1,13 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        Arrays.sort(nums);
-        int max=nums[nums.length-1];
-        
-        HashSet<Integer> s=new HashSet<>();
+       Arrays.sort(nums);
+       // first missing positive will start from 1
+       int miss=1;
         for(int i=0;i<nums.length;i++)
         {
-            s.add(nums[i]);
+            if(nums[i]==miss)
+                miss++;
         }
-        
-        for(int i=1;i<=max;i++)
-        {
-            if(!s.contains(i))
-                return i;
-        }
-        if(max<0) return 1;
-        return max+1;
+        return miss;
     }
 }
